@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel=stylesheet href=./bootstrap_min.css>
+<script defer src=./all_min.js></script>
+<link rel=stylesheet href=./style_min.css>
+<title>acceuil</title>
+</head>
+<body class=my-body onload="javascript:init()">
+<div class=eentete>
+<div class=logo><img src=logo.png alt></div>
+<div class=nom_match>%nom_match%</div>
+<div class=logo><img src=logo.png alt></div>
+</div>
+<div>
+<div id=A-G>
+<div id=A-G_>
+<div id=scoreA>
+<div id=valA>00</div>
+</div>
+</div>
+</div>
+<div id=A-D>
+<div id=A-D_>
+<div id=scoreB>
+<div id=valB>00</div>
+</div>
+</div>
+</div>
+<div id=A>
+<div id=A-c>
+<div id=Timer> 00:00:00 </div>
+<div id=phase_match>Phase Match</div>
+</div>
+</div>
+<div id="countdown" style="display: none;"></div>
+<div id=team>
+<div> %equipe_A% : %equipe_B%</div>
+</div>
+</div>
+<div class=name_joueur>
+<div class=teamA>
+<div class=j>
+<div class="cloch" id=cloch_1_A><span id="j_1_A_c" style="visibility : hidden ;" ><i class="fa-regular fa-bell fa-shake"></i></span></div>
+<div class=champs id=j_1_A> %j_1_A% </div>
+</div>
+<div class=j>
+<div class=cloch id=cloch_2_A><span id="j_2_A_c" style="visibility : hidden ;" ><i class="fa-regular fa-bell fa-shake"></i></span></div>
+<div class=champs id=j_2_A> %j_2_A%</div>
+</div>
+<div class=j>
+<div class=cloch id=cloch_3_A><span id="j_3_A_c" style="visibility : hidden ;" ><i class="fa-regular fa-bell fa-shake"></i></span></div>
+<div class=champs id=j_3_A> %j_3_A%</div>
+</div>
+<div class=j>
+<div class=cloch id=cloch_4_A><span id="j_4_A_c" style="visibility : hidden ;" ><i class="fa-regular fa-bell fa-shake"></i></span></div>
+<div class=champs id=j_4_A> %j_4_A%</div>
+</div>
+</div>
+<div class=teamB>
+<div class=j>
+<div class=champs id=j_1_B> %j_1_B%</div>
+<div class=cloch id=cloch_1_B><span id="j_1_B_c" style="visibility : hidden ;" ><i class="fa-regular fa-bell fa-shake"></i></span></div>
+</div>
+<div class=j>
+<div class=champs id=j_2_B> %j_2_B%</div>
+<div class=cloch id=cloch_2_B><span id="j_2_B_c" style="visibility : hidden ;" ><i class="fa-regular fa-bell fa-shake"></i></span></div>
+</div>
+<div class=j>
+<div class=champs id=j_3_B> %j_3_B%</div>
+<div class=cloch id=cloch_3_B><span id="j_3_B_c" style="visibility : hidden ;" ><i class="fa-regular fa-bell fa-shake"></i></span></div>
+</div>
+<div class=j>
+<div class=champs id=j_4_B> %j_4_B%</div>
+<div class=cloch id=cloch_4_B><span id="j_4_B_c" style="visibility : hidden ;" ><i class="fa-regular fa-bell fa-shake"></i></span></div>
+</div>
+<a id="fin_match" href="/finMatch"></a>
+</div>
+</div>
+<script>
+    let countdownInterval;
+    //console.log(typeof(document.getElementById("countdown_delay").value))
+    var countdownDuration = 10;//parseInt(document.getElementById("countdown_delay").value); // Durée du compte à rebours en secondes
+    let isRunning = false; // Indique si le compte à rebours est en cours
+
+    const countdownDisplay = document.getElementById('countdown');
+
+    function start_countdown(delay){
+        countdownDuration = delay
+        if (!isRunning) {
+            isRunning = true;
+            countdownDisplay.style.display = 'block';
+            
+            countdownInterval = setInterval(updateCountdown, 1000);
+        }
+    }
+
+    function updateCountdown() {
+        if (countdownDuration <= -1) {
+            // Le compte à rebours est terminé
+            isRunning = false;
+            countdownDisplay.style.display = 'none';
+            clearInterval(countdownInterval);
+            countdownDuration = 10; // Réinitialise la durée
+        } else {
+            // Mettre à jour l'affichage du compte à rebours
+            countdownDisplay.textContent = `${countdownDuration}`;
+            countdownDuration--;
+        }
+    }
+</script>
+<script>
+
+// pour le chrono
+var chrono=document.getElementById("Timer")
+var heure=0;var minute=0;var seconde=0;let timeout;estArrete=true
+function demarer(){if(estArrete){estArrete=false;defilerTime();return;}}
+function arreter(){if(!estArrete){estArrete=true;clearTimeout;}}
+function defilerTime(){if(estArrete){return;}
+seconde=parseInt(seconde);heure=parseInt(heure);minute=parseInt(minute);seconde++;if(seconde==60){minute++;seconde=0}
+if(minute==60){heure++
+minute=0}
+if(seconde<10){seconde="0"+seconde}
+if(minute<10){minute="0"+minute}
+if(heure<10){heure="0"+heure}
+chrono.textContent=`${heure}:${minute}:${seconde}`;timeout=setTimeout(defilerTime,1000);}
+function reset(){chrono.textContent="00:00:00"
+seconde=0
+minute=0
+heure=0
+clearTimeout}
+
+function chrono_(status)
+{
+    if (status == "demarre")
+    {
+        demarer();
+    }
+    else if (status == "arrete")
+    {
+        arreter();
+    }
+    else if (status == "reset")
+    {
+        reset();
+    }
+}
+
+
+
+// gestion du websocket
+var wskt;
+
+function init() // open WebSocketdocument.getElementById(qui_a_buzze).style.visibility = "visible"
+{
+    
+wskt = new WebSocket('ws://' + "192.168.4.1" + ':81/');
+wskt.onmessage = function(rx)
+{// client receive message
+/*
+*/
+    var obj = rx.data; // rx.data est un string 
+    console.log(obj)
+    
+    // la ce sont les donnees recu depuis la page administrateur
+    // une fois avoir recu les donnees depuis le serveur, on fait 
+    // dabord un split et on verifie le premier element de la liste
+    var donnee = rx.data.split(","); 
+    let action_a_faire = donnee[0];
+    //console.log(action_a_faire)
+
+    // action a faire peut prendre plusieur valeurs : remplacement, score, phase, buzzeur, chrono, fin_match
+    if (action_a_faire == "phase")
+    {
+        document.getElementById("phase_match").innerHTML = donnee[1];
+    }
+
+    else if (action_a_faire == "score")
+    {
+        document.getElementById("valA").innerHTML = donnee[1];
+        document.getElementById("valB").innerHTML = donnee[2]; 
+    }
+    else if (action_a_faire == "buzzeur")
+    {
+        let qui_a_buzze = donnee[1];
+        document.getElementById(qui_a_buzze).style.visibility = "visible"
+        setTimeout(()=>{document.getElementById(qui_a_buzze).style.visibility = "hidden"}, 3000)
+        // nous allons mettre cela un timeout , pourqu'il redevienne a son etat normal
+    }
+
+    else if(action_a_faire == "remplacement")
+    {
+        document.getElementById(donnee[1]).innerHTML = donnee[2];
+    }
+
+    else if (action_a_faire == "chrono")
+    {
+        
+        chrono_(donnee[1]);
+    }
+
+    else if (action_a_faire == "countdown")
+    {
+        
+        // on execute la focntion start_countdown avec comme parametre le delay
+        start_countdown(parseInt(donnee[1]))
+    }
+
+    else if (action_a_faire == "delete")
+    {
+        
+        document.getElementById(donnee[1]).innerHTML = "";
+    }
+
+    else if (action_a_faire == "fin_match")
+    {
+        
+        //document.getElementById("fin_match").click();
+        setTimeout(() => {document.getElementById("fin_match").click();}, 1000)
+    }
+
+
+   
+  
+};
+
+
+}
+</script>
+</body>
+
+</html>

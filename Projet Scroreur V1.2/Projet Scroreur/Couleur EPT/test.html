@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte à rebours</title>
+</head>
+<body>
+    <div id="countdown" style="display: none;"></div>
+    <button id="startButton">Démarrer le compte à rebours</button>
+    <button id="stopButton" style="display: none;">Arrêter le compte à rebours</button>
+
+    <style>
+
+@keyframes slide-in {
+    0% { transform: translateX(100%); }
+    70% { transform: translateX(0%); }
+    100% { transform: translateX(0%); }
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes scale-in {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+#countdown{
+    position: absolute;;
+    width: 22vw;
+    height: 23.5vw;
+    left: 39%;
+    top: 9vw;
+    z-index: 3;
+    animation: scale-in 2s ease-in-out forwards;
+    display: flex;
+    justify-content: center;
+    background: #D9D9D9;
+    
+    border: #73461F solid 5px;
+    font-family: 'Inter';
+    text-align: center;
+    padding-top: 6%;
+    font-weight: 600;
+    font-size: 6vw;
+    color: #73461F;
+    
+}
+    </style>
+    <script>
+        let countdownInterval;
+        let countdownDuration = 10; // Durée du compte à rebours en secondes
+        let isRunning = false; // Indique si le compte à rebours est en cours
+
+        const countdownDisplay = document.getElementById('countdown');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+
+        startButton.addEventListener('click', () => {
+            if (!isRunning) {
+                isRunning = true;
+                countdownDisplay.style.display = 'block';
+                startButton.style.display = 'none';
+                stopButton.style.display = 'inline';
+                countdownInterval = setInterval(updateCountdown, 1000);
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            if (isRunning) {
+                isRunning = false;
+                clearInterval(countdownInterval);
+                countdownDisplay.style.display = 'none';
+                startButton.style.display = 'inline';
+                stopButton.style.display = 'none';
+                countdownDuration = 10; // Réinitialise la durée
+            }
+        });
+
+        function updateCountdown() {
+            if (countdownDuration <= 0) {
+                // Le compte à rebours est terminé
+                isRunning = false;
+                countdownDisplay.style.display = 'none';
+                startButton.style.display = 'inline';
+                stopButton.style.display = 'none';
+                clearInterval(countdownInterval);
+                countdownDuration = 10; // Réinitialise la durée
+            } else {
+                // Mettre à jour l'affichage du compte à rebours
+                countdownDisplay.textContent = `${countdownDuration}`;
+                countdownDuration--;
+            }
+        }
+
+        
+    </script>
+
+
+<h1>Liste des joueurs</h1>
+<ul id="player-list">
+    <li>Joueur 1 <button class="remove-button">Remove</button></li>
+    <li>Joueur 2 <button class="remove-button">Remove</button></li>
+    <li>Joueur 3 <button class="remove-button">Remove</button></li>
+    <!-- Ajoutez plus de joueurs au besoin -->
+
+    <script>
+        // Sélectionnez tous les boutons "Remove"
+const removeButtons = document.querySelectorAll(".remove-button");
+
+// Ajoutez un gestionnaire d'événements à chaque bouton "Remove"
+removeButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        // Supprimez le parent (le <li>) du bouton actuel
+        button.parentElement.style.display = "none";
+    });
+});
+
+    </script>
+</ul>
+</body>
+</html>

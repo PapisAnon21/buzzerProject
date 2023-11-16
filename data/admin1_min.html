@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel=stylesheet href=./bootstrap_min.css>
+<script defer src=./all_min.js></script>
+<link rel=stylesheet href=./style_min.css>
+<title>admin</title>
+</head>
+<body class=my-body>
+<div class=eentete>
+<div class=logo><img src=logo.png alt></div>
+<div class=nom_match>%nom_match%</div>
+<div class=logo><img src=logo.png alt></div>
+</div>
+<div>
+<div id=A-G>
+<div id=A-G_>
+<div id=scoreA>
+<div id=valA>00</div>
+</div>
+</div>
+</div>
+<div id=A-D>
+<div id=A-D_>
+<div id=scoreB>
+<div id=valB>00</div>
+</div>
+</div>
+</div>
+<div id=A>
+<div id=A-c>
+<div id=Timer> 00:00:00 </div>
+<div id=phase_match>Phase Match</div>
+</div>
+</div>
+<div id="countdown" style="display: none;"></div>
+<div id=team>
+<div> %equipe_A% : %equipe_B%</div>
+</div>
+</div>
+<div class=admin>
+<div class=teamA>
+<div class=j>
+
+<button class="faux" id=cloch_1B  onclick="joueur_a_fausse('j_1_A')"> x </button>
+<button class=moins id=cloch_1B onclick="joueur_a_fausse_moins('j_1_A')"> - </button> 
+<div class=champs id=j_1_A> %j_1_A%</div>
+<button class=plus id=cloch_1B onclick="update_score_complex_A('j_1_A')"> + </button>
+</div>
+<div class=j>
+<button class="faux" id=cloch_1B onclick="joueur_a_fausse('j_2_A')"> x </button>
+<button class=moins id=cloch_1B onclick="joueur_a_fausse_moins('j_2_A')"> - </button>
+<div class=champs id=j_2_A> %j_2_A%</div>
+<button class=plus id=cloch_1B onclick="update_score_complex_A('j_2_A')"> + </button>
+</div>
+<div class=j>
+<button class="faux" id=cloch_1B  onclick="joueur_a_fausse('j_3_A')"> x </button>   
+<button class=moins id=cloch_1B onclick="joueur_a_fausse_moins('j_3_A')"> - </button>
+<div class=champs id=j_3_A> %j_3_A%</div>
+<button class=plus id=cloch_1B onclick="update_score_complex_A('j_3_A')"> + </button>
+</div>
+<div class=j>
+<button class="faux" id=cloch_1B  onclick="joueur_a_fausse('j_4_A')"> x </button>
+<button class=moins id=cloch_1B onclick="joueur_a_fausse_moins('j_4_A')"> - </button>
+<div class=champs id=j_4_A> %j_4_A%</div>
+<button class=plus id=cloch_1B onclick="update_score_complex_A('j_4_A')"> + </button>
+</div>
+</div>
+<div class=ajout>
+<div class=j>
+<button onclick=Aplusdix() class=commande>+10</button>
+<button onclick=Bplusdix() class=commande>+10</button>
+</div>
+<div class=j>
+<button onclick=Amoindix() class=commande>-10</button>
+<button onclick=Bmoindix() class=commande>-10</button>
+</div>
+<div class=j>
+<button onclick=demarer() class=commande>Start</button>
+<button onclick=arreter() class=commande>Stop</button>
+</div>
+<div class=j>
+<button class="fin_match " onclick="fin_du_match()">Fin Du Match</button>
+</div>
+<div class="row border">
+<div class="phase_match col">
+    <label for=username class="form-label fw-bold text-light mb-0 fs-5">Phase du Match:</label>
+    <div class="input-group text-center " style="border:1px solid black;border-radius:8px">
+    <input type=text class=form-control id="rubrique" placeholder="Quelle est la rubrique en cours ... ?" name="current_phase">
+    <button class="btn btn-light text-center" onclick="rubrique_match()"> Valider </button>
+    </div>
+    
+</div>
+<br>
+
+<div class="temps_countdown col">
+    <label for=username class="form-label fw-bold text-light mb-0 fs-5">Durée du Countdown:</label>
+    <div class="input-group text-center " style="border:1px solid black;border-radius:8px">
+    <input type=text class=form-control id="countdown_delay" placeholder="Saisir la durée du countdown ... ?" name="countdown_dela">
+    <button class="btn btn-light text-center" onclick="start_countdown()"> Lancer </button>
+    </div>
+    
+</div>
+<br>
+
+<div class="remplacement col">
+    <label for=username class="form-label fw-bold text-light mb-0 fs-5">Effectuer un remplacement :</label>
+    <div class="input-group text-center " style="border:1px solid black;border-radius:8px">
+    <input type=text class=form-control id="id_joueur" placeholder="position du joueur " name="">
+    <input type=text class=form-control id="nouveau_joueur" placeholder="Nom du nouveau joueur" name="">
+    <button class="btn btn-light text-center" onclick="remplacement()"> Valider </button>
+    </div>
+    
+</div>
+
+<div class="suppression col">
+    <label for=username class="form-label fw-bold text-light mb-0 fs-5">Supprimer un Joueur :</label>
+    <div class="input-group text-center " style="border:1px solid black;border-radius:8px">
+    <input type=text class=form-control id="id_joueur_a_supprimer" placeholder="position du joueur " name="">
+    <button class="btn btn-light text-center" onclick="supprimer_joueur()"> Valider </button>
+    </div>
+    
+</div>
+</div>
+
+</div>
+<div class=teamB>
+<div class=j>
+<button class="faux" id=cloch_1B  onclick="joueur_a_fausse('j_1_B')"> x </button>    
+<button class=moins id=cloch_1B onclick="joueur_b_fausse_moins('j_1_B')"> - </button>
+<div class=champs id=j_1_B> %j_1_B%</div>
+<button class=plus id=cloch_1B onclick="update_score_complex_B('j_1_B')"> + </button>
+</div>
+<div class=j>
+<button class="faux" id=cloch_1B onclick="joueur_a_fausse('j_2_B')"> x </button>      
+<button class=moins id=cloch_1B onclick="joueur_b_fausse_moins('j_2_B')"> - </button>
+<div class=champs id=j_2_B> %j_2_B%</div>
+<button class=plus id=cloch_1B onclick="update_score_complex_B('j_2_B')"> + </button>
+</div>
+<div class=j>
+<button class="faux" id=cloch_1B  onclick="joueur_a_fausse('j_3_B')"> x </button>   
+<button class=moins id=cloch_1B onclick="joueur_b_fausse_moins('j_3_B')"> - </button>
+<div class=champs id=j_3_B> %j_3_B%</div>
+<button class=plus id=cloch_1B onclick="update_score_complex_B('j_3_B')"> + </button>
+</div>
+<div class=j>
+<button class="faux" id=cloch_1B  onclick="joueur_a_fausse('j_4_B')"> x </button>   
+<button class=moins id=cloch_1B onclick="joueur_b_fausse_moins('j_4_B')"> - </button>
+<div class=champs id=j_4_B> %j_4_B%</div>
+<button class=plus id=cloch_1B onclick="update_score_complex_B('j_4_B')"> + </button>
+</div>
+</div>
+</div>
+<script>function Aplusdix(){var elem=document.getElementById('valA');var k=parseInt(elem.innerHTML)+10
+elem.innerHTML=String(k);update_score_simple();}
+function Bplusdix(){var elem=document.getElementById('valB');var k=parseInt(elem.innerHTML)+10
+elem.innerHTML=String(k);update_score_simple();}
+//
+function Aplusdix_complex(){var elem=document.getElementById('valA');var k=parseInt(elem.innerHTML)+10
+elem.innerHTML=String(k);}
+function Bplusdix_complex(){var elem=document.getElementById('valB');var k=parseInt(elem.innerHTML)+10
+elem.innerHTML=String(k);}
+//
+function Amoindix(){var elem=document.getElementById('valA');var k=parseInt(elem.innerHTML)-10
+elem.innerHTML=String(k);update_score_simple();}
+function Bmoindix(){var elem=document.getElementById('valB');var k=parseInt(elem.innerHTML)-10
+elem.innerHTML=String(k);update_score_simple();}
+var chrono=document.getElementById("Timer")
+var heure=0;var minute=0;var seconde=0;let timeout;estArrete=true
+function demarer(){if(estArrete){estArrete=false;defilerTime();}envoyer_chronos_status('demarre')}
+function arreter(){if(!estArrete){estArrete=true;clearTimeout;}envoyer_chronos_status('arrete')}
+function defilerTime(){if(estArrete){return;}
+seconde=parseInt(seconde);heure=parseInt(heure);minute=parseInt(minute);seconde++;if(seconde==60){minute++;seconde=0}
+if(minute==60){heure++
+minute=0}
+if(seconde<10){seconde="0"+seconde}
+if(minute<10){minute="0"+minute}
+if(heure<10){heure="0"+heure}
+chrono.textContent=`${heure}:${minute}:${seconde}`;timeout=setTimeout(defilerTime,1000);}
+function reset(){chrono.textContent="00:00:00"
+seconde=0
+minute=0
+heure=0
+clearTimeout}
+
+function rubrique_match()
+{
+    document.getElementById("phase_match").innerHTML = document.getElementById("rubrique").value ;
+    update_rubrique();
+}
+
+function update_rubrique()
+{
+var xhr = new XMLHttpRequest(); 
+xhr.open('GET', '/phase?current_phase=' + document.getElementById("rubrique").value , true);
+xhr.send();
+}
+function remplacement()
+{
+
+    document.getElementById(document.getElementById("id_joueur").value).innerHTML = document.getElementById("nouveau_joueur").value;
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/remplacement?id_joueur=' + document.getElementById("id_joueur").value + "&nouveau_joueur=" + document.getElementById("nouveau_joueur").value  , true);
+    xhr.send();
+}
+
+function supprimer_joueur()
+{
+
+    document.getElementById(document.getElementById("id_joueur_a_supprimer").value).innerHTML = "";
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/suppression?id_joueur=' + document.getElementById("id_joueur_a_supprimer").value , true);
+    xhr.send();
+}
+
+function update_score_simple()
+{
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/update_score?score_A=' + document.getElementById("valA").innerHTML + '&score_B=' + document.getElementById("valB").innerHTML   , true);
+    xhr.send();
+}
+
+function update_score_complex_A(id_joueur)
+{
+    Aplusdix_complex();
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/update_score_by_j?score_A=' + document.getElementById("valA").innerHTML + '&score_B=' + document.getElementById("valB").innerHTML + "&id_joueur=" + id_joueur   , true);
+    xhr.send();
+}
+function update_score_complex_B(id_joueur)
+{
+    Bplusdix_complex();
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/update_score_by_j?score_A=' + document.getElementById("valA").innerHTML + '&score_B=' + document.getElementById("valB").innerHTML + "&id_joueur=" + id_joueur   , true);
+    xhr.send();
+}
+
+function joueur_a_fausse(id_joueur)
+{
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/joueur_fausse?id_joueur=' + id_joueur   , true);
+    xhr.send();
+}
+
+function joueur_a_fausse_moins(id_joueur)
+{
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/joueur_fausse?id_joueur=' + id_joueur   , true);
+    xhr.send();
+    Amoindix();
+}
+
+function joueur_b_fausse_moins(id_joueur)
+{
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/joueur_fausse?id_joueur=' + id_joueur   , true);
+    xhr.send();
+    Bmoindix();
+}
+function envoyer_chronos_status(status)
+{
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/chrono?status=' + status   , true);
+    xhr.send();
+}
+
+function fin_du_match()
+{
+    arreter();
+    var xhr = new XMLHttpRequest(); 
+    xhr.open('GET', '/finMatch_p'   , true);
+    xhr.send();
+}
+</script>
+<!-- script faisant debuter le coutdown -->
+<script>
+    let countdownInterval;
+    //console.log(typeof(document.getElementById("countdown_delay").value))
+    var countdownDuration = 10;//parseInt(document.getElementById("countdown_delay").value); // Durée du compte à rebours en secondes
+    let isRunning = false; // Indique si le compte à rebours est en cours
+
+    const countdownDisplay = document.getElementById('countdown');
+
+    function start_countdown(){
+        countdownDuration = parseInt(document.getElementById("countdown_delay").value);
+        var xhr = new XMLHttpRequest(); 
+        xhr.open('GET', '/countdown?delay=' + countdownDuration   , true);
+        xhr.send();
+        if (!isRunning) {
+            isRunning = true;
+            countdownDisplay.style.display = 'block';
+            
+            countdownInterval = setInterval(updateCountdown, 1000);
+        }
+    }
+
+    function updateCountdown() {
+        if (countdownDuration <= -1) {
+            // Le compte à rebours est terminé
+            isRunning = false;
+            countdownDisplay.style.display = 'none';
+            clearInterval(countdownInterval);
+            countdownDuration = 10; // Réinitialise la durée
+        } else {
+            // Mettre à jour l'affichage du compte à rebours
+            countdownDisplay.textContent = `${countdownDuration}`;
+            countdownDuration--;
+        }
+    }
+</script>
+</body>
+<!-- definir phase du match -->
+</html>
