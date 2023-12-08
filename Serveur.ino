@@ -5,8 +5,22 @@ nous testons les requetes dans tous les sens
 
 
 */
+
+/*
+nouveau pinout :
+Joueur j_1_A = {"", 0,0, 36,0}; // 
+Joueur j_2_A = {"", 0,0, 39,0};
+Joueur j_3_A = {"", 0,0, 34,0}, j_4_A  = {"", 0,0, 35,0}, j_1_B = {"", 0,0, 4,0}, j_2_B = {"", 0,0, 16,0}, j_3_B = {"", 0,0, 17,0}, j_4_B = {"", 0,0, 5,0};
+
+ancien pinout
+Joueur j_1_A = {"", 0,0, 33,0}; // 
+Joueur j_2_A = {"", 0,0, 39,0};
+Joueur j_3_A = {"", 0,0, 34,0}, j_4_A  = {"", 0,0, 35,0}, j_1_B = {"", 0,0, 15,0}, j_2_B = {"", 0,0, 4,0}, j_3_B = {"", 0,0, 16,0}, j_4_B = {"", 0,0, 17,0};
+
+
+*/
 #include "Arduino.h"
-#include "Audio.h"
+//#include "Audio.h"
 //#include "FS.h"
 #include <WiFi.h>
 #include <AsyncTCP.h>
@@ -33,7 +47,7 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 // la j'inclus les identifiants wifi
 
-char ssidAP[] = "WIFI_ESP";
+char ssidAP[] = "ENSA_BUZZER";
 char passwordAP[] = "mypassword21";
 
 unsigned int vitesse_de_communication = 115200;
@@ -83,7 +97,7 @@ int counter = 0;
 // les pin ou sont branchés les LEDs
 // a noter que les leds adressables s'utilise chacun avec un seul pin
 // cela veut dire que avec un seul pin on peut controler plusieurs leds ! magnifique
-#define DATA_PIN_A  32
+#define DATA_PIN_A  33
 #define DATA_PIN_B 21
 // le nombre totale de leds adressables de chacun des coté
 #define NUM_LED_A 12*4
@@ -157,26 +171,27 @@ Audio audio;
 }
 */
 // les fonctions associees au son
-
+/*
 void initSound()
 {
   audio.setPinout(I2S_BCLK, I2S_LRC, I2S_DOUT);
-  audio.setVolume(21); // 0...21   
+  audio.setVolume(100); // 0...100   
 }
 
 void playSound(const char* path)
 {
   audio.connecttoFS(SPIFFS, path);
-  /*for(int i = 0; i < 500; i++)
-  {
+  //for(int i = 0; i < 500; i++)
+ // {
   
-  }*/
+ // }
 }
 void play()
 {
   for(int i = 0; i < 1000; i++)
     audio.loop();
 }
+*/
 
 
 bool verified_configuration()
@@ -205,26 +220,34 @@ void save_in_flash(char key1[] = "", String value1 = "", char key2[] = "" , Stri
   preferences.end();
 }
 
+void ledBuiltinOff()
+{
+
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
+}
+
+
 
 
 
 void setup()
 {
-  
+  ledBuiltinOff();
   start_serial_communication(vitesse_de_communication, 1000);
   rtc_wdt_protect_off();
   rtc_wdt_disable();
-  //init_fast_led();
+  init_fast_led();
   start_pin_mode();
   //attach_interrupt_pin_j();
-  //jeux_de_lumiere();
+  jeux_de_lumiere();
   //init_spi_com();
-  //jeux_de_lumiere_blan                 che();
+  //jeux_de_lumiere_blanche();
   start_spiffs_memory();
   initSound();
   start_wifi_ip(ssidAP, passwordAP);
-  playSound("/buzzer.wav");
-  play();
+  //playSound("/incorrec_song.wav");
+  //play();
   start_async_server();
   start_dns(domaine);
   start_websocket_server();
@@ -583,7 +606,7 @@ server.on("/update_score_by_j", HTTP_GET, [](AsyncWebServerRequest *request)
                       //Serial.print(j_1_A.nom_complet);
                       //Serial.println(j_1_A.nombre_bonne_reponses);
                       lumiere_vert("j_1_A"); // on allume sa lumiere en bleue
-                      delay(2000);
+                      //delay(2000);
                       lumiere_orange("j_1_A");
                     }
                        
@@ -594,7 +617,7 @@ server.on("/update_score_by_j", HTTP_GET, [](AsyncWebServerRequest *request)
                       String current_score = "score," + String(match.current_score_A) + "," + String(match.current_score_B);
                     webSocket.broadcastTXT(current_score.c_str(), current_score.length());
                       lumiere_vert("j_2_A"); // on allume sa lumiere en bleue
-                      delay(2000);
+                      //delay(2000);
                       lumiere_orange("j_2_A");
                       //lumiere_bleue("j_2_A");
                     }
@@ -606,7 +629,7 @@ server.on("/update_score_by_j", HTTP_GET, [](AsyncWebServerRequest *request)
                       //Serial.print(j_1_A.nom_complet);
                       //lumiere_vert("j_1_A");
                       lumiere_vert("j_3_A"); // on allume sa lumiere en bleue
-                      delay(2000);
+                      //delay(2000);
                       lumiere_orange("j_3_A");
                     }
                     else if (request->getParam("id_joueur")->value() == "j_4_A")
@@ -617,7 +640,7 @@ server.on("/update_score_by_j", HTTP_GET, [](AsyncWebServerRequest *request)
                       //Serial.print(j_1_A.nom_complet);
                       //lumiere_vert("j_1_A");
                       lumiere_vert("j_4_A"); // on allume sa lumiere en bleue
-                      delay(2000);
+                      //delay(2000);
                       lumiere_orange("j_4_A");
                     }
                   
@@ -628,7 +651,7 @@ server.on("/update_score_by_j", HTTP_GET, [](AsyncWebServerRequest *request)
                       webSocket.broadcastTXT(current_score.c_str(), current_score.length());
                       //Serial.print(j_1_A.nom_complet);
                       lumiere_vert("j_1_B"); // on allume sa lumiere en bleue
-                      delay(2000);
+                      //delay(2000);
                       lumiere_orange("j_1_B");
                     }
 
@@ -639,7 +662,7 @@ server.on("/update_score_by_j", HTTP_GET, [](AsyncWebServerRequest *request)
                       webSocket.broadcastTXT(current_score.c_str(), current_score.length());
                       //Serial.print(j_1_A.nom_complet);
                       lumiere_vert("j_2_B");
-                      delay(2000);
+                      //delay(2000);
                       lumiere_orange("j_2_B");
                     }
                     else if (request->getParam("id_joueur")->value() == "j_3_B")
@@ -649,7 +672,7 @@ server.on("/update_score_by_j", HTTP_GET, [](AsyncWebServerRequest *request)
                       webSocket.broadcastTXT(current_score.c_str(), current_score.length());
                       //Serial.print(j_1_A.nom_complet);
                       lumiere_vert("j_3_B");
-                      delay(2000);
+                      //delay(2000);
                       lumiere_orange("j_3_B");
                     } 
 
@@ -660,7 +683,7 @@ server.on("/update_score_by_j", HTTP_GET, [](AsyncWebServerRequest *request)
                       webSocket.broadcastTXT(current_score.c_str(), current_score.length());
                       //Serial.print(j_1_A.nom_complet);
                       lumiere_vert("j_4_B");
-                      delay(2000);
+                      //delay(2000);
                       lumiere_orange("j_4_B");
                     }
 
@@ -796,22 +819,22 @@ server.on("/joueur_fausse", HTTP_GET, [](AsyncWebServerRequest *request)
                       if (request->getParam("id_joueur")->value() == "j_1_A")
                       {
                         
-                         playSound("/buzzer.wav");
-                            play();
+                         //playSound("/incorrec_song.wav");
+                            //play();
                         Serial.println("le joueur j_1_A a fausse");
                           lumiere_rouge("j_1_A");
                           j_1_A.nombre_mauvaiz_reponses++;
-                          delay(2000);
+                          //delay(2000);
                           lumiere_orange("j_1_A");
                       }
                       else if (request->getParam("id_joueur")->value() == "j_2_A")
                       {
-                          playSound("/incorrec_song.wav");
-                          play();
+                          //playSound("/incorrec_song.wav");
+                          //play();
                           Serial.println("le joueur j_2_A a fausse");
                           lumiere_rouge("j_2_A");
                           j_2_A.nombre_mauvaiz_reponses++;
-                          delay(2000);
+                          //delay(2000);
                           lumiere_orange("j_2_A");
                       }
                       else if (request->getParam("id_joueur")->value() == "j_3_A")
@@ -825,35 +848,35 @@ server.on("/joueur_fausse", HTTP_GET, [](AsyncWebServerRequest *request)
                       {
                           lumiere_rouge("j_4_A");
                           j_4_A.nombre_mauvaiz_reponses++;
-                          delay(2000);
+                          //delay(2000);
                           lumiere_orange("j_4_A");
                       }
                       else if (request->getParam("id_joueur")->value() == "j_1_B")
                       {
                           lumiere_rouge("j_1_B");
                           j_1_B.nombre_mauvaiz_reponses++;
-                          delay(2000);
+                          //delay(2000);
                           lumiere_orange("j_1_B");
                       }
                       else if (request->getParam("id_joueur")->value() == "j_2_B")
                       {
                           lumiere_rouge("j_2_B");
                           j_2_B.nombre_mauvaiz_reponses++;
-                          delay(2000);
+                          //delay(2000);
                           lumiere_orange("j_2_B");
                       }
                       else if (request->getParam("id_joueur")->value() == "j_3_B")
                       {
                           lumiere_rouge("j_3_B");
                           j_3_B.nombre_mauvaiz_reponses++;
-                          delay(2000);
+                          //delay(2000);
                           lumiere_orange("j_3_B");
                       }
                       else if (request->getParam("id_joueur")->value() == "j_4_B")
                       {
                           lumiere_rouge("j_4_B");
                           j_4_B.nombre_mauvaiz_reponses++;
-                          delay(2000);
+                          //delay(2000);
                           lumiere_orange("j_4_B");
                       }
                 }
@@ -888,7 +911,7 @@ void send_buzzer()
     //writeFile(SD, "/historique_des_buzz.txt", "Le joueur 1 a buzze : ce texte se trouve dans le fichier historique de la carte sd");
     //readFile(SD, "/historique_des_buzz.txt");
     
-    delay(3000);
+    //delay(3000);
     lumiere_orange("j_1_A");
     /*j_1_A.a_buzzer = 0;
     j_2_A.a_buzzer = 0;
@@ -911,7 +934,7 @@ void send_buzzer()
     //readFile(SD, "/historique_des_buzz.txt");
     
     //j_2_A.a_buzzer = 0;
-    delay(3000);
+    //delay(3000);
     lumiere_orange("j_2_A");
     /*j_1_A.a_buzzer = 0;
     j_2_A.a_buzzer = 0;
@@ -934,7 +957,7 @@ void send_buzzer()
     //readFile(SD, "/historique_des_buzz.txt");
     
     //j_3_A.a_buzzer = 0;
-    delay(3000);
+    //delay(3000);
     lumiere_orange("j_3_A");
  /*j_1_A.a_buzzer = 0;
     j_2_A.a_buzzer = 0;
@@ -956,7 +979,7 @@ void send_buzzer()
     //readFile(SD, "/historique_des_buzz.txt");
     
     //j_4_A.a_buzzer = 0;
-    delay(3000);
+    //delay(3000);
     lumiere_orange("j_4_A");
  /*j_1_A.a_buzzer = 0;
     j_2_A.a_buzzer = 0;
@@ -979,7 +1002,7 @@ void send_buzzer()
     //readFile(SD, "/historique_des_buzz.txt");
     
     //j_4_A.a_buzzer = 0;
-    delay(3000);
+    //delay(3000);
     lumiere_orange("j_1_B");
  /*j_1_A.a_buzzer = 0;
     j_2_A.a_buzzer = 0;
@@ -1002,7 +1025,7 @@ void send_buzzer()
     //writeFile(SD, "/historique_des_buzz.txt", "Le joueur 1 a buzze : ce texte se trouve dans le fichier historique de la carte sd");
     //readFile(SD, "/historique_des_buzz.txt");
    
-    delay(3000);
+    //delay(3000);
     lumiere_orange("j_2_B");
  /*j_1_A.a_buzzer = 0;
     j_2_A.a_buzzer = 0;
@@ -1026,7 +1049,7 @@ void send_buzzer()
     
     
     //j_4_A.a_buzzer = 0;
-    delay(3000);
+    //delay(3000);
     lumiere_orange("j_3_B");
  /*j_1_A.a_buzzer = 0;
     j_2_A.a_buzzer = 0;
@@ -1049,7 +1072,7 @@ void send_buzzer()
     //writeFile(SD, "/historique_des_buzz.txt", "Le joueur 1 a buzze : ce texte se trouve dans le fichier historique de la carte sd");
     //readFile(SD, "/historique_des_buzz.txt");
     
-    delay(3000);
+    //delay(3000);
     lumiere_orange("j_4_B");
  /*j_1_A.a_buzzer = 0;
     j_2_A.a_buzzer = 0;
@@ -1064,7 +1087,7 @@ void send_buzzer()
   }
 
 }
-
+/*
 void IRAM_ATTR j_1_A_callback()
 {
   // cette fonction se declenche lorque le j_1_A a buzze
@@ -1163,7 +1186,7 @@ void IRAM_ATTR j_4_B_callback()
   webSocket.broadcastTXT(qui_a_buzzer.c_str(), qui_a_buzzer.length());
   
 }
-
+*/
 void init_fast_led()
 {
     FastLED.addLeds<WS2812B, DATA_PIN_A, GRB>(LED_A, NUM_LED_A);  // GRB ordering is typical
@@ -1661,7 +1684,7 @@ void jeux_de_lumiere_blanche()
     a = 12;
     for(int i=a;i<(a+12);i++)
     {
-      LED_A[i] = CRGB::White;
+      LED_A[i] = CRGB::White;Play
       FastLED.show();
     }
   
