@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel=stylesheet href=./bootstrap_min.css>
+<link rel=stylesheet href=./style_min.css>
+</head>
+<body>
+<div class="align-items-center container rounded ps-0 pe-0 w-75" style=margin-top:200px;background-color:#73bcd9>
+<div class="rounded box d-flex align-items-center justify-content-center text-white" style=background-color:#4d5560;height:150px>
+<div style=width:200px;height:200px;background-color:#73bcd9;position:relative;bottom:60px class=rounded-circle>
+<img src=./logo.png alt=yourlogo style=position:relative;top:25px;left:26px>
+</div>
+</div>
+<div class="d-flex flex-column justify-content-center align-items-center p-3 bg-dark box">
+<form id=login-form class="mt-5 mb-5 ms-0 me-0 d-flex flex-column justify-content-center ">
+<h1 class="text-white text-center mb-5">Configuration d'avant-match</h1>
+<div class=mb-5>
+<div for=username class="form-label fw-bold text-light mb-3 text-center" style=font-size:30px>Rubriques : </div>
+<div class="d-flex flew-row align-items-center justify-content-center">
+<label class="btn text-white d-inline-block rounded-circle minus" style=background-color:#4d5560;position:relative;left:15px>-</label>
+<div class=input-group>
+<input type=text class="form-control rounded-pill" placeholder="Rubriques disponibles" aria-label="Text input with dropdown button" id=inputValue style=position:relative;left:20px>
+<button class="btn btn-outline-secondary dropdown-toggle rounded-circle" type=button data-bs-toggle=dropdown aria-expanded=false style=background-color:#4d5560;position:relative;right:13.3px></button>
+<ul class="dropdown-menu dropdown-menu-end" id=dropdownList>
+</ul>
+</div>
+<label class="btn text-white add-button d-inline-block rounded-circle" id=addButton style=background-color:#4d5560;position:relative;right:10px>+</label>
+</div>
+</div>
+<div class="mb-3 mt-5">
+<label for=password class="form-label fw-bold text-light mb-3 d-flex justify-content-center" style=font-size:30px>Joueurs : </label>
+<div class="d-flex flex-row justify-content-md-around mb-3" style=font-size:40px;color:#4D5560>
+<span class="d-block bg-light me-5 ps-3 pe-3">Team A</span>
+<span class="d-block bg-light ms-5 ps-3 pe-3">Team B</span>
+</div>
+<div class="d-flex justify-content-center">
+<div class="input-group mb-3 w-25">
+<input type=range class=form-range min=0 max=10 step=1 id=customRange3>
+<span id=rangeValue class="d-block text-center range-value" style=color:#4d5560>5 joueurs</span>
+</div>
+</div>
+<div class="d-flex flex-row">
+<div class="d-flex flew-row align-items-center justify-content-lg-around">
+<label class="btn m-4 text-white d-inline-block rounded-circle minus" style=background-color:#4d5560;position:relative;left:18px>-</label>
+<div class="input-group mb-0">
+<input type=text class="form-control rounded-pill" aria-label="Text input with dropdown button" placeholder="Joueurs Team A">
+<button class="btn btn-outline-secondary dropdown-toggle rounded-circle" type=button data-bs-toggle=dropdown aria-expanded=false style=background-color:#4d5560;position:relative;right:32px></button>
+<ul class="dropdown-menu dropdown-menu-end teams">
+</ul>
+</div>
+<label class="btn m-4 text-white add-button d-inline-block rounded-circle" style=background-color:#4d5560;position:relative;left:-50px>+</label>
+</div>
+<div class="d-flex flew-row align-items-center justify-content-lg-around test ms-5">
+<label class="btn m-4 text-white d-inline-block rounded-circle minus" style=background-color:#4d5560;position:relative;left:18px>-</label>
+<div class="input-group mb-0">
+<input type=text class="form-control rounded-pill test" aria-label="Text input with dropdown button" placeholder="Joueurs Team B">
+<button class="btn btn-outline-secondary dropdown-toggle rounded-circle" type=button data-bs-toggle=dropdown aria-expanded=false style=background-color:#4d5560;position:relative;right:32px></button>
+<ul class="dropdown-menu dropdown-menu-end test teams">
+</ul>
+</div>
+<label class="btn m-4 text-white add-button d-inline-block rounded-circle" style=background-color:#4d5560;position:relative;left:-50px>+</label>
+</div>
+</div>
+</div>
+</form>
+</div>
+<div class="d-flex justify-content-center align-items-center rounded" style=background-color:#4d5560;height:150px>
+<button class="btn m-4 text-white w-25 h-50 validate" style="background-color:#73bcd9;font-size:40px;border:1px solid black;border-radius:8px">Valider</button>
+</div>
+</div>
+<script src=./bootstrap.bundle.js></script>
+<script>var rangeInput=document.getElementById("customRange3");var rangeValue=document.getElementById("rangeValue");rangeInput.addEventListener("input",function(){rangeValue.textContent=rangeInput.value+" joueurs";var a=parseInt(rangeInput.value);console.log("range"+a);var b=document.querySelectorAll(".teams");console.log(b);b.forEach(function(e){var c=e.querySelectorAll(".dropdown-item");if(c.length>a){for(var d=c.length-1;d>=a;d--){c[d].remove()}}})});var addButtonList=document.querySelectorAll(".add-button");addButtonList.forEach(function(a){a.addEventListener("click",function(){let inputGroup=this.parentElement;let input=inputGroup.querySelector("input.form-control");let dropdown=inputGroup.querySelector(".dropdown-menu");let maxItems=parseInt(rangeInput.value);console.log(maxItems);if(dropdown.children.length>=maxItems){return}let listItem=document.createElement("li");let link=document.createElement("a");link.classList.add("dropdown-item");link.href="#";link.textContent=input.value;dropdown.appendChild(listItem);listItem.appendChild(link);input.value="";maxItems=parseInt(rangeInput.value)})});var minusButtons=document.querySelectorAll(".minus");minusButtons.forEach(function(a){a.addEventListener("click",function(){var b=a.parentElement;var d=b.querySelector(".dropdown-menu");d.classList.add("show");var c=d.querySelectorAll(".dropdown-item");c.forEach(function(e){e.addEventListener("click",function(){this.remove()})})})});var validateButton=document.querySelector(".validate");validateButton.addEventListener("click",function(){var c=document.querySelectorAll(".teams");var a=parseInt(rangeInput.value);var b=true;c.forEach(function(e){var d=e.querySelectorAll(".dropdown-item");if(d.length!==a){b=false}});if(b){console.log("Tous les dropdowns sont valides.")}else{console.log("Les dropdowns ne sont pas valides.")}});</script>
+</body>
+</html>

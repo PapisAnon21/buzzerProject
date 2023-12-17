@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <script defer src="./all.js"></script>
+    <!-- <link rel="stylesheet" href="./all.min.css"> -->
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+
+<body class="p-5">
+    <form action="/configurationSoumise" enctype="multipart/form-data" method="post"
+        class=" border border-dark rounded mt-5 container-xlg my-form">
+        <div class="entete">
+
+            <div class="rounded-circle imagee">
+                <img src="./logo.png">
+
+            </div>
+        </div>
+
+        <div class="corps p-4 ">
+            <div class="title">
+                <p class="text-center fs-2 row">
+                    <span class="col-12"><i class="fa-solid fa-gear fa-2x text-light text-start "></i></span> <span
+                        class=" col-12 text-center ">CONFIGURATION</span>
+                </p>
+
+                <hr class="">
+            </div>
+
+            <div class="bodyy row">
+                <!-- premier lot  -->
+                <div class="first-lot col ms-3">
+
+                    <div class="first-group label-input-1">
+
+                        <label for="school_name" class="ps-2">Etablissement : </label>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control bg-light" id="school_name"
+                                placeholder="Entrez le nom de votre etablissement" name="school_name">
+                            <label for="school_name" class="labelf">Nom de l'Etablissement
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                    class="fa-solid fa-house"></i></i></label>
+                        </div>
+
+                    </div>
+
+
+                    <div class="second-group label-input-2">
+
+                        <label for="user_name" class="ps-2">Nom d'utilisateur : </label>
+                        <div class="form-floating mb-3">
+
+                            <input type="text" class="form-control bg-light" id="user_name" placeholder="User Name"
+                                name="user_name">
+                            <label for="user_name" class="labelf">Entrez votre nom
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i
+                                    class="fa-solid fa-user"></i></label>
+                        </div>
+                    </div>
+
+                    <div class="third-group label-input-3">
+
+                        <label for="verified_password" class="ps-2">Confirmer mot de passe : </label>
+                        <div class="form-floating mb-3">
+
+                            <input type="password" class="form-control bg-light" id="verified_password"
+                                placeholder="Confirmer mot de passe" name="verified_password">
+                            <label for="verified_password" class="labelf" class="labelf">Confirmer votre mot de passe
+                                &nbsp;&nbsp;&nbsp; <i class="fa-solid fa-lock"></i></label>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <!-- second lot -->
+                <div class="second-lot col  ms-5">
+
+                    <div class="first-group label-input-4">
+
+                        <label for="scoreur_name" class="ps-2">Nom du Scoreur : </label>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control bg-light" id="scoreur_name"
+                                placeholder="Entrez le nom de votre etablissement" name="scoreur_name">
+                            <label for="scoreur_name" class="labelf">Baptisez votre Scoreur
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="fa-solid fa-gear"></i></label>
+                        </div>
+
+                    </div>
+
+
+                    <div class="second-group label-input-2">
+
+                        <label for="password" class="ps-2">Mot de passe : </label>
+                        <div class="form-floating mb-3">
+
+                            <input type="password" class="form-control bg-light" id="password"
+                                placeholder="Mot de passe" name="user_name">
+                            <label for="password" class="labelf">Saisir votre mot de passe ...
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-lock"></i></label>
+                        </div>
+                    </div>
+
+                    <div class="third-group label-input-6">
+
+
+                        <div class="">
+                            <label for="formFile" class="form-label"> Choisir votre logo</label>
+                            <input class="form-control mb-2" type="file" id="formFile">
+
+
+                            <div class="btn-group">
+                                <input type="checkbox" class="btn-check" id="btncheck1" name="logo_default">
+                                <label class="btn btn-outline-dark" for="btncheck1">Logo par defaut</label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer p-4">
+            <div class="bouton text-center">
+                <button class="btns btn w-25 ">Valider</button>
+
+            </div>
+        </div>
+
+
+
+
+        <!-- <label class="custom-uploader" for="file">Upload Your File</label>
+        <input id="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" name="fileToUpload" type="file" />
+        <button class="btn btn-success" name="submit" type="submit"> Upload File </button> -->
+
+
+    </form>
+</body>
+
+</html>

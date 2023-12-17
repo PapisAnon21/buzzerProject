@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <link rel="stylesheet" href="scoreur.css">
+
+    
+    <title>admin</title>
+</head>
+
+<body>
+
+    <div class="entete">
+        <div class="logo"><img src="logo.png" alt=""></div>
+        <div class="nom_match">NOM MATCH</div>
+        <div class="logo"><img src="logo.png" alt=""></div>
+    </div>
+
+
+    <div>
+
+        <div id="A-G">
+            <div id="A-G_">
+                <div id="scoreA"> 
+                    <div id = valA>00</div>
+                </div>   
+            </div>
+         
+        </div>
+        
+        <div id="A-D">
+            <div id="A-D_">
+                <div id="scoreB"> 
+                    <div id = valB>00</div>
+                </div>   
+            </div>          
+        </div>
+
+
+        <div id="A">
+
+            <div id="A-c">
+                <div id="Timer"> 00:00:00 </div>
+
+                <div id="phase_match">Phase Match</div>
+            </div>
+
+        </div>
+
+        <div id="team">
+            <div>TEAM A : TEAM B</div>
+        </div>
+
+    </div>
+
+    <div class="admin">
+
+        <div class="teamA">
+            <div class="j">
+                <button class="moins" id="cloch_1B"> - </button>
+                <div class="champs" id="j1_A"> Joueur 1</div>
+                <button class="plus" id="cloch_1B"> + </button>
+            </div>
+            <div class="j">
+                <button class="moins" id="cloch_1B"> - </button>
+                <div class="champs" id="j2-A"> Joueur 2</div>
+                <button class="plus" id="cloch_1B"> + </button>
+            </div>
+            <div class="j">
+                <button class="moins" id="cloch_1B"> - </button>
+                <div class="champs" id="j3-A"> Joueur 3</div>
+                <button class="plus" id="cloch_1B"> + </button>
+            </div>
+            <div class="j">
+                <button class="moins" id="cloch_1B"> - </button>
+                <div class="champs" id="j4-A"> Joueur 4</div>
+                <button class="plus" id="cloch_1B"> + </button>
+            </div>
+
+        </div>
+
+        <div class="ajout">
+            <div class="j">
+                <button onclick="Aplusdix()" class="commande">+10</button>
+                <button onclick="Bplusdix()"  class="commande">+10</button>
+            </div>
+            <div class="j">
+                <button onclick="Amoindix()" class="commande">-10</button>
+                <button onclick="Bmoindix()" class="commande">-10</button>
+            </div>
+            <div class="j"> 
+                <button onclick="demarer()" class="commande">Start</button>
+                <button onclick="arreter()" class="commande">Stop</button>
+            </div>
+
+            <div class="j">
+                <select class="dropdown" id="nameRubrique">
+                    <option value="Cantonade">Cantonade</option>
+                    <option value="Relais">Relais</option>
+                    <option value="Eclaire">Eclaire</option>
+                    <option value="Identification">Identification</option>
+                </select>
+            </div>
+
+            <div class="j">
+                <button class="fin_match">Fin Du Match</button>
+            </div>
+        </div>
+
+        <div class="teamB">
+            <div class="j">
+                <button class="moins" id="cloch_1B"> - </button>
+                <div class="champs" id="j1_B"> Joueur 1</div>
+                <button class="plus" id="cloch_1B"> + </button>
+            </div>
+            <div class="j">
+                <button class="moins" id="cloch_1B"> - </button>
+                <div class="champs" id="j2_B"> Joueur 2</div>
+                <button class="plus" id="cloch_1B"> + </button>
+            </div>
+            <div class="j">
+                <button class="moins" id="cloch_1B"> - </button>
+                <div class="champs" id="j3_B"> Joueur 3</div>
+                <button class="plus" id="cloch_1B"> + </button>
+            </div>
+            <div class="j">
+                <button class="moins" id="cloch_1B"> - </button>
+                <div class="champs" id="j4_B"> Joueur 4</div>
+                <button class="plus" id="cloch_1B"> + </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        function Aplusdix()  {
+            var elem = document.getElementById('valA');
+            var k = parseInt(elem.innerHTML)+10
+            elem.innerHTML = String(k) }
+
+        function Bplusdix()  {
+            var elem = document.getElementById('valB');
+            var k = parseInt(elem.innerHTML)+10
+            elem.innerHTML = String(k) }
+
+        function Amoindix()  {
+            var elem = document.getElementById('valA');
+            var k = parseInt(elem.innerHTML)-10
+            elem.innerHTML = String(k) }
+
+        function Bmoindix()  {
+            var elem = document.getElementById('valB');
+            var k = parseInt(elem.innerHTML)-10
+            elem.innerHTML = String(k) }
+
+
+
+        var chrono = document.getElementById("Timer")
+        var heure = 0;
+        var minute = 0;
+        var seconde = 0;
+        let timeout;
+
+        estArrete = true
+
+        function demarer(){
+            if(estArrete){
+                estArrete = false;
+                defilerTime();
+            return;
+            
+            }
+            
+        }
+
+        function arreter(){
+            if(!estArrete){
+                estArrete = true;
+                clearTimeout;
+            }
+            
+        }
+
+        function defilerTime(){
+            if(estArrete){
+                return;
+            }
+            seconde = parseInt(seconde);
+            heure = parseInt(heure);
+            minute = parseInt(minute);
+
+            seconde++;
+            if(seconde == 60){
+                minute++;
+                seconde = 0
+            }
+
+            if(minute == 60){
+                heure++
+                minute = 0
+            }
+
+            if(seconde < 10){
+                seconde = "0"+seconde
+            }
+            if(minute < 10){
+                minute = "0"+minute
+            }
+
+            if(heure < 10){
+                heure = "0"+heure
+            }
+
+            chrono.textContent = `${heure}:${minute}:${seconde}`;
+            timeout = setTimeout(defilerTime,1000); 
+        }
+
+        function reset(){
+            chrono.textContent = "00:00:00"
+            seconde = 0
+            minute = 0
+            heure = 0
+            clearTimeout
+
+        }
+
+        const nameRubrique = document.getElementById("nameRubrique");
+        const phase_match = document.getElementById("phase_match");
+        
+        nameRubrique.addEventListener("change", function() {
+          const selectedName = nameRubrique.value;
+          phase_match.textContent = selectedName;
+        });
+
+    </script>
+
+
+</body>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+
+</html>
